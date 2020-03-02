@@ -1,0 +1,3 @@
+rootProject.name = 'algorithms'
+include 'coin-change'
+include 'ee_shopping_cart'

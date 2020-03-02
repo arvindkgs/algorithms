@@ -1,0 +1,15 @@
+plugins{
+    id 'java'
+}
+
+allprojects {
+    sourceCompatibility = 1.8
+}
+
+subprojects {
+    version = '1.0'
+    group 'sanbox.arvindkgs.algorithms'
+    repositories {
+        mavenCentral()
+    }
+}
