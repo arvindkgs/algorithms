@@ -3,14 +3,16 @@
  */
 package com.akgs.algo.familytree;
 
-import com.akgs.algo.familytree.common.AddChildFailedException;
-import com.akgs.algo.familytree.common.AddSpouseFailedException;
-import com.akgs.algo.familytree.common.PersonNotFoundException;
+import com.akgs.algo.familytree.common.*;
+import com.akgs.algo.familytree.common.exception.AddChildFailedException;
+import com.akgs.algo.familytree.common.exception.AddSpouseFailedException;
+import com.akgs.algo.familytree.common.exception.CommandFailedException;
+import com.akgs.algo.familytree.common.exception.PersonNotFoundException;
 import com.akgs.algo.familytree.service.Command;
 import com.akgs.algo.familytree.model.Female;
 import com.akgs.algo.familytree.model.Male;
 import com.akgs.algo.familytree.model.Person;
-import com.akgs.algo.familytree.common.Constants;
+
 import java.io.*;
 import java.util.*;
 
@@ -33,27 +35,32 @@ public class FamilyTree {
         processFile(new FileInputStream(new File(path)), true);
     }
 
+    /**
+     * Reads input stream and parses commands per-line and evaluates command and updates Family Tree
+     * @param inputStream
+     * @param print
+     * @throws IOException
+     */
     private void processFile(InputStream inputStream, Boolean print) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        String line = null;
-        while((line = br.readLine()) != null){
-            Command cmd = Command.parse(line);
-            try {
-                String out = cmd.evaluate(this);
-                if(print){
-                    System.out.println(out);
-                }
-            } catch (AddChildFailedException e) {
-                if(print){
-                    System.out.println(Constants.ADD_CHILD_FAILED);
-                }
-            } catch (PersonNotFoundException e) {
-                if(print){
-                    System.out.println(Constants.PERSON_NOT_FOUND);
-                }
-            } catch (AddSpouseFailedException e) {
-                if(print){
-                    System.out.println(Constants.ADD_SPOUSE_FAILED);
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                Command cmd = Command.parse(line);
+                try {
+                    String out = cmd.evaluate(this);
+                    if (print) {
+                        System.out.println(out);
+                    }
+                } catch (CommandFailedException e) {
+                    if (print) {
+                        if (e.getCause() instanceof AddChildFailedException) {
+                            System.out.println(Constants.ADD_CHILD_FAILED);
+                        } else if (e.getCause() instanceof PersonNotFoundException) {
+                            System.out.println(Constants.PERSON_NOT_FOUND);
+                        } else if (e.getCause() instanceof AddSpouseFailedException) {
+                            System.out.println(Constants.ADD_SPOUSE_FAILED);
+                        }
+                    }
                 }
             }
         }

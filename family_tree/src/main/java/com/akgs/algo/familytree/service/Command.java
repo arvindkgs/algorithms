@@ -1,14 +1,12 @@
 package com.akgs.algo.familytree.service;
 
 import com.akgs.algo.familytree.FamilyTree;
-import com.akgs.algo.familytree.common.AddChildFailedException;
-import com.akgs.algo.familytree.common.AddSpouseFailedException;
-import com.akgs.algo.familytree.common.PersonNotFoundException;
+import com.akgs.algo.familytree.common.exception.CommandFailedException;
 
 import java.util.Arrays;
 
 public abstract class Command {
-    public enum COMMAND_TYPE { ADD_KING, ADD_QUEEN, ADD_CHILD, GET_RELATIONSHIP, ADD_SPOUSE }
+    public enum COMMAND_TYPE { ADD_CHILD, GET_RELATIONSHIP, ADD_SPOUSE }
     protected COMMAND_TYPE type;
     Command(COMMAND_TYPE type){
         this.type = type;
@@ -33,5 +31,5 @@ public abstract class Command {
                 return null;
         }
     }
-    public abstract String evaluate(FamilyTree tree) throws AddChildFailedException, PersonNotFoundException, AddSpouseFailedException;
+    public abstract String evaluate(FamilyTree tree) throws CommandFailedException;
 }

@@ -2,7 +2,7 @@ package com.akgs.algo.familytree.service;
 
 import com.akgs.algo.familytree.FamilyTree;
 import com.akgs.algo.familytree.common.Constants;
-import com.akgs.algo.familytree.common.IllegalTraversalException;
+import com.akgs.algo.familytree.common.exception.IllegalTraversalException;
 import com.akgs.algo.familytree.model.Female;
 import com.akgs.algo.familytree.model.Male;
 import com.akgs.algo.familytree.model.Person;

@@ -1,8 +1,9 @@
 package com.akgs.algo.familytree.service;
 
 import com.akgs.algo.familytree.FamilyTree;
-import com.akgs.algo.familytree.common.AddChildFailedException;
-import com.akgs.algo.familytree.common.PersonNotFoundException;
+import com.akgs.algo.familytree.common.exception.AddChildFailedException;
+import com.akgs.algo.familytree.common.exception.CommandFailedException;
+import com.akgs.algo.familytree.common.exception.PersonNotFoundException;
 import com.akgs.algo.familytree.model.Female;
 import com.akgs.algo.familytree.model.Male;
 import com.akgs.algo.familytree.model.Person;
@@ -27,23 +28,23 @@ public class AddChild extends Command {
     }
 
     @Override
-    public String evaluate(FamilyTree tree) throws AddChildFailedException, PersonNotFoundException {
+    public String evaluate(FamilyTree tree) throws CommandFailedException {
         Optional<Person> person = tree.get(motherName);
         if(!person.isPresent()){
-            throw new PersonNotFoundException();
+            throw new CommandFailedException(new PersonNotFoundException());
         }
         else if(!(person.get() instanceof Female)){
-            throw new AddChildFailedException();
+            throw new CommandFailedException(new AddChildFailedException());
         }
         else {
             Female mother = (Female)person.get();
             if(mother.hasChild(childName)){
                 //Mother already has child with same name
-                throw new AddChildFailedException();
+                throw new CommandFailedException(new AddChildFailedException());
             }
             if(tree.get(childName).isPresent()){
                 //Pre-existing person in family tree
-                throw new AddChildFailedException();
+                throw new CommandFailedException(new AddChildFailedException());
             }
             Person newPerson = childGender == Person.GENDER.MALE? new Male(childName, mother): new Female(childName, mother);
             tree.add(childName, newPerson);

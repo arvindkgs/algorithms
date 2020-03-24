@@ -1,5 +1,6 @@
 package com.akgs.algo.familytree.common;
 
+import com.akgs.algo.familytree.common.exception.IllegalTraversalException;
 import com.akgs.algo.familytree.model.Female;
 import com.akgs.algo.familytree.model.Male;
 import com.akgs.algo.familytree.model.Person;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Utils {
-    public static Optional<Female> getMother(Optional<Person> person) throws IllegalTraversalException{
+    public static Optional<Female> getMother(Optional<Person> person) throws IllegalTraversalException {
         return person.get().getMother();
     }
 

@@ -1,9 +1,10 @@
 package com.akgs.algo.familytree.service;
 
 import com.akgs.algo.familytree.FamilyTree;
-import com.akgs.algo.familytree.common.AddSpouseFailedException;
+import com.akgs.algo.familytree.common.exception.AddSpouseFailedException;
+import com.akgs.algo.familytree.common.exception.CommandFailedException;
 import com.akgs.algo.familytree.common.Constants;
-import com.akgs.algo.familytree.common.PersonNotFoundException;
+import com.akgs.algo.familytree.common.exception.PersonNotFoundException;
 import com.akgs.algo.familytree.model.Female;
 import com.akgs.algo.familytree.model.Male;
 import com.akgs.algo.familytree.model.Person;
@@ -24,18 +25,18 @@ public class AddSpouse extends Command {
     }
 
     @Override
-    public String evaluate(FamilyTree tree) throws PersonNotFoundException, AddSpouseFailedException {
+    public String evaluate(FamilyTree tree) throws CommandFailedException {
         Optional<Person> person = tree.get(forPerson);
         if(!person.isPresent()){
-            throw new PersonNotFoundException();
+            throw new CommandFailedException(new PersonNotFoundException());
         }
         else {
             if(person.get().getSpouse().isPresent()){
-                throw new AddSpouseFailedException();
+                throw new CommandFailedException(new AddSpouseFailedException());
             }
             Optional<Person> spouse = tree.get(spouseName);
             if(spouse.isPresent()){
-                throw new AddSpouseFailedException();
+                throw new CommandFailedException(new AddSpouseFailedException());
             }
             if(person.get().getGender() == Person.GENDER.MALE){
                 Female spouse1 = new Female(spouseName, null);
