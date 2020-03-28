@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class Utils {
-    public static Optional<Female> getMother(Optional<Person> person) throws IllegalTraversalException {
-        return person.get().getMother();
+    public static Optional<Female> getMother(Person person) throws IllegalTraversalException {
+        return person.getMother();
     }
 
-    public static Optional<Person> getFather(Optional<Person> person) throws IllegalTraversalException{
-        if (!person.get().getMother().isPresent()) {
+    public static Optional<Person> getFather(Person person) throws IllegalTraversalException{
+        if (!person.getMother().isPresent()) {
             throw new IllegalTraversalException(Constants.MOTHER_NOT_FOUND);
         }
-        Female mother = person.get().getMother().get();
+        Female mother = person.getMother().get();
         //Got Father
         return mother.getSpouse();
     }
@@ -62,5 +62,13 @@ public class Utils {
             }
         }
         return sisters;
+    }
+
+    public static String evalOutput(String sb) {
+        if (sb.length() > 0) {
+            return sb.trim();
+        } else {
+            return Constants.NONE;
+        }
     }
 }
