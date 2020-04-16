@@ -6,8 +6,6 @@ import com.akgs.algo.familytree.common.exception.IllegalTraversalException;
 import com.akgs.algo.familytree.model.Person;
 import com.akgs.algo.familytree.service.relation.*;
 
-import java.util.Optional;
-
 public class GetRelation extends Command {
     public enum RELATION_TYPE {
         PATERNAL_UNCLE("PATERNAL-UNCLE", new PaternalUncle()),
@@ -58,13 +56,13 @@ public class GetRelation extends Command {
 
     @Override
     public String evaluate(FamilyTree tree) {
-        Optional<Person> person = tree.get(ofPerson);
-        if(!person.isPresent()){
+        Person person = tree.get(ofPerson);
+        if(person != null){
             return Constants.PERSON_NOT_FOUND;
         }
         else {
             try {
-                return type.getRelationship(person.get());
+                return type.getRelationship(person);
             }
             catch (IllegalTraversalException e){
                 return Constants.NONE;

@@ -79,8 +79,8 @@ public class FamilyTree {
         }
     }
 
-    public Optional<Person> get(String name){
-        return Optional.ofNullable(people.get(name));
+    public Person get(String name){
+        return people.get(name);
     }
 
     public static void main(String[] args) {

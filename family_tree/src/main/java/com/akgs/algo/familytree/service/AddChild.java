@@ -29,20 +29,20 @@ public class AddChild extends Command {
 
     @Override
     public String evaluate(FamilyTree tree) throws CommandFailedException {
-        Optional<Person> person = tree.get(motherName);
-        if(!person.isPresent()){
+        Person person = tree.get(motherName);
+        if(person == null){
             throw new CommandFailedException(new PersonNotFoundException());
         }
-        else if(!(person.get() instanceof Female)){
+        else if(!(person instanceof Female)){
             throw new CommandFailedException(new AddChildFailedException());
         }
         else {
-            Female mother = (Female)person.get();
+            Female mother = (Female)person;
             if(mother.hasChild(childName)){
                 //Mother already has child with same name
                 throw new CommandFailedException(new AddChildFailedException());
             }
-            if(tree.get(childName).isPresent()){
+            if(tree.get(childName) != null){
                 //Pre-existing person in family tree
                 throw new CommandFailedException(new AddChildFailedException());
             }
