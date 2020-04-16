@@ -1,0 +1,5 @@
+insert into USER(id, username, password, email, first_name, last_name, dob) values(100, 'akumargs', 'qwert@123', 'mail.arvind85@gmail.com', 'Arvind', 'Kumar',  '2015-12-06 17:01:00');
+
+Create user
+-----------
+$ curl -i -X POST -H "Content-Type:application/json" -d '{"username": "a1", "password": "qwerty@123", "email": "a1@mail.com", "firstname": "A", "lastname": "1"}' http://localhost:8080/user
