@@ -3,7 +3,7 @@ package com.akgs.algo.matrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SprialMatrix {
+public class SpiralMatrix {
     /**
      * Solves https://leetcode.com/problems/spiral-matrix
      */
