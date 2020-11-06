@@ -1,4 +1,4 @@
-# Family Tree
+# Family com.akgs.algo.tree.Tree
 
 ## Introduction
 This algorithm is used to create and traverse the family tree. This family tree is initialized to the following structure.
