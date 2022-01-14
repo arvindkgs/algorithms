@@ -4,8 +4,11 @@ import java.util.*;
 
 /**
  * Given an undirected graph, color each node of graph such that neighbouring nodes do not share same color
+ * https://gitlab.com/nsajko/example_optimally_colored_graphs
  */
 public class ColorGraph {
+
+    static Set<COLOR> colorsUsedInGraph = new HashSet<>();
 
     public enum COLOR{
         RED, BLUE, GREEN, YELLOW, BLACK, PURPLE, ORANGE, VIOLET, WHITE, MAROON, BROWN, GREY, OFFWHITE, BEIGE
@@ -58,7 +61,39 @@ public class ColorGraph {
 
     //TODO: Implement logic
     public static void colorGraph(GraphNode[] graph){
+        if(graph==null || graph.length==0) return;
 
+        for(int i=0; i<graph.length; i++){
+            colorUtil(graph[i]);
+        }
+    }
+
+    private static void colorUtil(GraphNode node) {
+        Set<COLOR> neighbourColors = new HashSet<>();
+        List<COLOR> unused = new ArrayList<>(Arrays.asList(COLOR.values()));
+        for(GraphNode gn : node.getNeighbors()){
+            neighbourColors.add(gn.getColor());
+        }
+        for(COLOR c : neighbourColors){
+            unused.remove(c);
+        }
+        COLOR cur = null;
+        for(COLOR c : unused){
+            if(colorsUsedInGraph.contains(c)){
+                cur = c;
+                break;
+            }
+        }
+        if(cur == null){
+            cur = unused.get(0);
+        }
+        System.out.println("neighbour colors:"+neighbourColors);
+        System.out.println("colors:"+colorsUsedInGraph);
+        System.out.println("unused colors:"+unused);
+        System.out.println("cur:"+cur.toString());
+        node.setColor(cur);
+        //System.out.println("current color : "+node.getColor());
+        colorsUsedInGraph.add(cur);
     }
 
     public static Set<COLOR> distinctColor(GraphNode[] graph){
@@ -84,23 +119,41 @@ public class ColorGraph {
         GraphNode l = new GraphNode("l");
 
         a.addNeighbor(b);
+        a.addNeighbor(c);
         a.addNeighbor(d);
+        b.addNeighbor(a);
         b.addNeighbor(f);
         b.addNeighbor(c);
         c.addNeighbor(a);
+        c.addNeighbor(b);
         c.addNeighbor(i);
+        d.addNeighbor(a);
         d.addNeighbor(e);
         d.addNeighbor(j);
+        e.addNeighbor(d);
         e.addNeighbor(j);
         e.addNeighbor(f);
+        f.addNeighbor(e);
         f.addNeighbor(g);
+        f.addNeighbor(b);
         g.addNeighbor(k);
+        g.addNeighbor(f);
         g.addNeighbor(h);
+        h.addNeighbor(g);
         h.addNeighbor(l);
         h.addNeighbor(i);
+        i.addNeighbor(h);
         i.addNeighbor(l);
+        i.addNeighbor(c);
+        j.addNeighbor(d);
+        j.addNeighbor(e);
         j.addNeighbor(k);
+        k.addNeighbor(j);
+        k.addNeighbor(g);
         k.addNeighbor(l);
+        l.addNeighbor(k);
+        l.addNeighbor(h);
+        l.addNeighbor(i);
 
         GraphNode[] graph = new GraphNode[] { a, b, c, d, e, f, g, h, i, j, k, l };
         colorGraph(graph);
