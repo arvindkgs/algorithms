@@ -1,0 +1,1 @@
+1. Implement a ledger db using normal RDBMS. A ledger DB tracks addition, updatation and deletion of data in a irrefutable way. Design a db that can audit and verify state of db to be accurate and untampered.
