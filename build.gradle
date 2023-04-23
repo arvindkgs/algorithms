@@ -3,7 +3,7 @@ plugins{
 }
 
 allprojects {
-    sourceCompatibility = 1.8
+    sourceCompatibility = 1.9
 }
 
 subprojects {
@@ -21,3 +21,4 @@ repositories {
 dependencies{
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 }
+targetCompatibility = JavaVersion.VERSION_1_9
